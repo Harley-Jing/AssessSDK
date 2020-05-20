@@ -1,27 +1,34 @@
 # SDK接入文档（Android）
 ## 1. 导入SDK
-1. **将assesslib.jar放置Android工程libs目录下**
+  1.1 **将assesslib.jar放置Android工程libs目录下**
 
   ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200520152113387.png)
   
-  2. **在游戏的主项目build.gradle添加依赖**
+  1.2 **在游戏的主项目build.gradle添加依赖**
   
   ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200520152036103.png)
   
   ## 2. 配置Manifest.xml文件
-  1. **targetSdkVersion**
+  2.1 **targetSdkVersion**
+
   你需要将游戏内的targetSdkVersion版本设为28（SDK目前不适配28以上）
-  2. **AndroidStudio版本sdk版本号设置**
+
+  2.2 **AndroidStudio版本sdk版本号设置**
+
   游戏的targetSdkVersion,minSdkVersion,compileSdkVersion必须和sdk保持一致，即targetSdkVersion设为28，compileSdkVersion设为28，minSdkVersion设为19。
-  3. **添加权限**
+
+  2.3 **添加权限**
 ```java
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
  ## 3. API
- 1. **添加Application（必接）**
+ 3.1 **添加Application（必接）**
+
     在游戏启动之前，需要做一些初始化，因此需要继承sdk的ChannelApplication。
+
     ==注意在Manifest.xml文件中添加声明==
+
     示例：
 ```java
 import com.umisdk.assesslib.ChannelAppliaction;
@@ -34,9 +41,10 @@ public class GameApplication extends ChannelAppliaction {
     }
 }
 ```
-2. **初始化（必接）**
+3.2 **初始化（必接）**
 
  在游戏第一个activity的onCreate()方法中调用的初始化方法，该接口执行SDK的一些初始化工作，在调用SDK的其他方法之前必須要先确保SDK初始化成功。
+
 函数
 ```java
  public void init(Context context)
@@ -55,7 +63,7 @@ public class GameApplication extends ChannelAppliaction {
         LoginManager.getInstance().init(this);
     }
 ```
-3. **打开调试模式**
+3.3 **打开调试模式**
 
 打开SDK调试模式，增加调试的Toast以及Log输出
  
@@ -76,7 +84,7 @@ public class GameApplication extends ChannelAppliaction {
 
 ```
 
-4. **登录（必接）**
+3.4 **登录（必接）**
 
 登录接口需在初始化成功之后调用。若玩家先前已经登录，则自动登录；否则跳转到登录界面。
 
@@ -89,7 +97,7 @@ public void showLoginPanel()
 ```java
 LoginManager.getInstance().showLoginPanel();
 ```
-5. **退出登录（必接）**
+3.5 **退出登录（必接）**
 
 玩家登出游戏时，注销SDK登录状态信息。
 
@@ -102,7 +110,7 @@ public void logout()
 ```java
 LoginManager.getInstance().logout();
 ```
-6. **创建角色（必接）**
+3.6 **创建角色（必接）**
 
 在玩家首次创建角色的時候调用此接口，保存玩家角色信息。
 
@@ -125,7 +133,7 @@ LoginManager.getInstance().logout();
 ReportedData.getInstance(GameActivity.this).createRole("roleId", "roleName", "roleType",
  				1, 1, "roleCreateTime");
 ```
-6. **进入游戏（必接）**
+3.7 **进入游戏（必接）**
 
 在玩家进入游戏的時候调用此接口，保存玩家角色信息。
 
