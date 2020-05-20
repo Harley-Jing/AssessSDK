@@ -126,7 +126,7 @@ LoginManager.getInstance().logout();
 | roleType|角色类型  |
 | roleGender|角色性别（-1：无性别；0：男； 1：女；）  |
 | roleLevel|角色等级  |
-| roleCreateTime|创建角色时间  |
+| roleCreateTime|创建角色时间（以服务器时间为准）  |
 
 示例：
 ```java
@@ -150,7 +150,7 @@ public void enterGame(final String roleId, final String roleName, final String r
 | roleGender|角色性别（-1：无性别；0：男； 1：女；）  |
 | roleLevel|角色等级  |
 | vipLevel|vip等级  |
-| enterGameTime|进入游戏时间  |
+| enterGameTime|进入游戏时间（以服务器时间为准）  |
 
 示例：
 ```java
