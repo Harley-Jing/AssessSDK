@@ -8,7 +8,19 @@
   #import <Assesslib/Assesslib.h>
   ````
  ## 3. API
- 3.1 **初始化（必接）**
+ 3.1**实现协议**
+
+ 协议
+ ````objc
+  <AssesslibDelegate>
+````
+示例：
+
+````objc
+@interface ViewController : UIViewController<AssesslibDelegate>
+````
+
+ 3.2 **初始化（必接）**
 
   在启动的时候添加初始化，传入YES表示开启调试模式，可以得到更为详细的日志，传入NO关闭调试模式，关闭日志，日志可以通过搜索关键字AssesslibLog得到
 
@@ -24,17 +36,19 @@
 示例：
 
 ````objc
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    
-    [[Assesslib AssesslibShareInstance]AssesslibInitWithDebug:YES];
-    
-    return YES;
-}
+[[Assesslib AssesslibShareInstance]AssesslibInitWithDebug:YES];
+````
+3.3**指定代理**
+代理
+````objc
+@property (nonatomic, weak) id <AssesslibDelegate> assesslibDelegate;
+````
+示例：
+````objc
+[Assesslib AssesslibShareInstance].assesslibDelegate = self;
 ````
 
-
-3.2 **登录（必接）**
+3.4 **登录（必接）**
 
 登录接口需在初始化成功之后调用。若玩家先前已经登录，则自动登录；否则跳转到登录界面。
 
@@ -47,7 +61,7 @@
 [[Assesslib AssesslibShareInstance]showLoginPanel];
 
 ````
-3.3 **退出登录（必接）**
+3.5 **退出登录（必接）**
 
 玩家登出游戏时，注销SDK登录状态信息。
 
@@ -60,7 +74,7 @@
 ````objc
 [[Assesslib AssesslibShareInstance]Logout];
 ````
-3.4 **创建角色（必接）**
+3.6 **创建角色（必接）**
 
 在玩家首次创建角色的時候调用此接口，保存玩家角色信息。
 
@@ -81,7 +95,7 @@
 ````objc
 [[Assesslib AssesslibShareInstance]createRole:@"3759506187" withRoleName:@"璐璐" withRoleType:@"辅助" withRoleGender:1 withRoleLevel:6 withRoleCreateTime:@"202005231644"];
 ````
-3.5 **进入游戏（必接）**
+3.7 **进入游戏（必接）**
 
 在玩家进入游戏的時候调用此接口，保存玩家角色信息。
 
@@ -102,4 +116,20 @@
 示例：
 ````objc
 [[Assesslib AssesslibShareInstance]enterGame:@"3759506187" withRoleName:@"璐璐" withRoleType:@"辅助" withRoleGender:1 withRoleLevel:6 withVipLevel:30 withRoleCreateTime:@"202005231644"];
-````      
+````    
+
+3.8**实现协议中的回调方法**
+
+  实现回调方法以获得登录回调
+函数
+````objc
+-(void)AssesslibCallBack:(nonnull NSString *) message;
+````
+示例：
+
+````objc
+-(void)AssesslibCallBack:(nonnull NSString *) message
+{
+    NSLog(@"CallBack message = %@",message);
+}
+````
